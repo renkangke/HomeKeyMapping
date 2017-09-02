@@ -18,10 +18,7 @@ import java.lang.ref.WeakReference
 class ButtonEventService : AccessibilityService() {
 
     companion object {
-        /**
-         * The interval time of home action.
-         */
-        val INTERVAL_TIME = 100L
+
         private val HANDLER_HOME_DELAY_TIME_WHAT   = 100001
         private val HANDLER_RECENT_DELAY_TIME_WHAT = 100002
         private val HANDLER_BACK_DELAY_TIME_WHAT   = 100003
@@ -88,10 +85,10 @@ class ButtonEventService : AccessibilityService() {
             mIsFirstAction = !mIsFirstAction
             if (mIsFirstAction) {
                 mFirstEventTime = System.currentTimeMillis()
-                mAccessibilityHandler.sendEmptyMessageDelayed(what, INTERVAL_TIME * 3)
+                mAccessibilityHandler.sendEmptyMessageDelayed(what, Config.getInterval(this).toLong())
             } else {
                 val interval = System.currentTimeMillis() - mFirstEventTime
-                if (interval < (INTERVAL_TIME * 3)) {
+                if (interval < Config.getInterval(this)) {
                     mAccessibilityHandler.removeMessages(what)
                     val action = getPressAction(this, key)
                     if (action != 0) {

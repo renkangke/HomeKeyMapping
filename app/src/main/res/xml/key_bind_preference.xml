@@ -3,6 +3,7 @@
 
     <PreferenceCategory android:title="@string/cat_status">
         <Preference android:key="key_enabled" android:title="@string/pref_enabled"/>
+        <Preference android:key="key_interval" android:title="@string/pref_interval"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/cat_key_press">
         <Preference android:key="key_home_press" android:title="@string/pref_home_press" android:summary="@string/pval_default"/>
