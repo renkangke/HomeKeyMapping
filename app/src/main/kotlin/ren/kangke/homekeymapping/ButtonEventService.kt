@@ -19,18 +19,18 @@ class ButtonEventService : AccessibilityService() {
 
     companion object {
 
-        private val HANDLER_HOME_DELAY_TIME_WHAT   = 100001
+        private val HANDLER_HOME_DELAY_TIME_WHAT = 100001
         private val HANDLER_RECENT_DELAY_TIME_WHAT = 100002
-        private val HANDLER_BACK_DELAY_TIME_WHAT   = 100003
+        private val HANDLER_BACK_DELAY_TIME_WHAT = 100003
 
-        fun getDelayTimeWhat(keyCode: Int): Int = when(keyCode) {
+        fun getDelayTimeWhat(keyCode: Int): Int = when (keyCode) {
             KeyEvent.KEYCODE_HOME -> HANDLER_HOME_DELAY_TIME_WHAT
             KeyEvent.KEYCODE_BACK -> HANDLER_BACK_DELAY_TIME_WHAT
             KeyEvent.KEYCODE_APP_SWITCH -> HANDLER_RECENT_DELAY_TIME_WHAT
             else -> 0
         }
 
-        fun getPressAction(ctx: Context, keyCode: Int): Int = when(keyCode) {
+        fun getPressAction(ctx: Context, keyCode: Int): Int = when (keyCode) {
             KeyEvent.KEYCODE_HOME -> {
                 var code = Config.getKeyCode(ctx, Config.KEY_HOME_PRESS)
                 if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_HOME_PRESS)
@@ -49,7 +49,7 @@ class ButtonEventService : AccessibilityService() {
             else -> 0
         }
 
-        fun getLongPressAction(ctx: Context, msgWhat: Int): Int = when(msgWhat) {
+        fun getLongPressAction(ctx: Context, msgWhat: Int): Int = when (msgWhat) {
             HANDLER_HOME_DELAY_TIME_WHAT -> {
                 var code = Config.getKeyCode(ctx, Config.KEY_HOME_LONG_PRESS)
                 if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_HOME_LONG_PRESS)
@@ -74,9 +74,9 @@ class ButtonEventService : AccessibilityService() {
 
     private val mAccessibilityHandler: Handler = AccessibilityHandler(this, this)
 
-    override fun onInterrupt() { }
+    override fun onInterrupt() {}
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) { }
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
         val key = event.keyCode
@@ -96,6 +96,8 @@ class ButtonEventService : AccessibilityService() {
                     }
                 }
             }
+        }
+        if (key in arrayOf(KeyEvent.KEYCODE_HOME, KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_APP_SWITCH)) {
             return true
         }
         return super.onKeyEvent(event)
