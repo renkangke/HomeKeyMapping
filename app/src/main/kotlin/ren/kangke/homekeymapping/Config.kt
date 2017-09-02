@@ -42,7 +42,11 @@ object Config {
         else -> ""
     }
 
-    fun getKeyCode(ctx: Context, key: String): Int = PreferenceManager.getDefaultSharedPreferences(ctx).getInt(key, -1)
+    fun getKeyCode(ctx: Context, key: String): Int {
+        var code = PreferenceManager.getDefaultSharedPreferences(ctx).getInt(key, -1)
+        if (code == -1) code = Config.getDefaultKeyCode(key)
+        return code
+    }
 
     fun setKeyCode(ctx: Context, key: String, value: Int) = PreferenceManager.getDefaultSharedPreferences(ctx).edit().putInt(key, value).apply()
 
