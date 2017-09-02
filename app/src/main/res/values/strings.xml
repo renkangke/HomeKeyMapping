@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">mBack</string>
-    <string name="accessibility_service">home键轻触返回服务</string>
+    <string name="accessibility_service">mBack Assist</string>
     <string name="accessibility_label">帮助你打开home键轻触返回，长按home的服务</string>
 </resources>

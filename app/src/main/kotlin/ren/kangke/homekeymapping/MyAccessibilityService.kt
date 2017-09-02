@@ -1,6 +1,8 @@
 package ren.kangke.homekeymapping
 
 import android.accessibilityservice.AccessibilityService
+import android.app.Service
+import android.content.Intent
 import android.os.Handler
 import android.os.Message
 import android.view.KeyEvent
@@ -19,51 +21,63 @@ class MyAccessibilityService : AccessibilityService() {
          * The interval time of home action.
          */
         val INTERVAL_TIME = 100L
-        val HANDLER_HOME_DELAY_TIME_WHAT = 100001
+        private val HANDLER_HOME_DELAY_TIME_WHAT   = 100001
+        private val HANDLER_RECENT_DELAY_TIME_WHAT = 100002
+        private val HANDLER_BACK_DELAY_TIME_WHAT   = 100003
+
+        fun getDelayTimeWhat(keyCode: Int): Int = when(keyCode) {
+            KeyEvent.KEYCODE_HOME -> HANDLER_HOME_DELAY_TIME_WHAT
+            KeyEvent.KEYCODE_BACK -> HANDLER_BACK_DELAY_TIME_WHAT
+            KeyEvent.KEYCODE_APP_SWITCH -> HANDLER_RECENT_DELAY_TIME_WHAT
+            else -> 0
+        }
+
+        fun getPressAction(keyCode: Int): Int = when(keyCode) {
+            KeyEvent.KEYCODE_HOME -> AccessibilityService.GLOBAL_ACTION_BACK
+            else -> 0
+        }
+
+        fun getLongPressAction(msgWhat: Int): Int = when(msgWhat) {
+            HANDLER_HOME_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_HOME
+            HANDLER_BACK_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN
+            HANDLER_RECENT_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_RECENTS
+            else -> 0
+        }
     }
 
-    private var mIsFirstHomeAction = false
-    private var mFirstHomeEventTime: Long = 0
+    private var mIsFirstAction = false
+    private var mFirstEventTime = 0L
+
     private val mAccessibilityHandler: Handler = AccessibilityHandler(this)
 
-    override fun onInterrupt() {
+    override fun onInterrupt() { }
 
-    }
-
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-
-    }
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) { }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
         val key = event.keyCode
-        when(key) {
-            KeyEvent.KEYCODE_HOME -> {
-                mIsFirstHomeAction = !mIsFirstHomeAction
-                if (mIsFirstHomeAction) {
-                    mFirstHomeEventTime = System.currentTimeMillis()
-                    mAccessibilityHandler.sendEmptyMessageDelayed(HANDLER_HOME_DELAY_TIME_WHAT, INTERVAL_TIME)
-                } else {
-                    val interval = System.currentTimeMillis() - mFirstHomeEventTime
-                    if (interval > (INTERVAL_TIME * 5)) {
-                        return super.onKeyEvent(event)
-                    } else {
-                        mAccessibilityHandler.removeMessages(HANDLER_HOME_DELAY_TIME_WHAT)
-                        performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK)
-                        return true
+        val what = getDelayTimeWhat(key)
+        if (what != 0) {
+            mIsFirstAction = !mIsFirstAction
+            if (mIsFirstAction) {
+                mFirstEventTime = System.currentTimeMillis()
+                mAccessibilityHandler.sendEmptyMessageDelayed(what, INTERVAL_TIME * 3)
+            } else {
+                val interval = System.currentTimeMillis() - mFirstEventTime
+                if (interval < (INTERVAL_TIME * 3)) {
+                    mAccessibilityHandler.removeMessages(what)
+                    val action = getPressAction(key)
+                    if (action != 0) {
+                        performGlobalAction(action)
                     }
                 }
             }
-            KeyEvent.KEYCODE_BACK -> {
-                // TODO: back
-            }
-
-            KeyEvent.KEYCODE_APP_SWITCH -> {
-                // TODO: recent app
-            }
+            return true
         }
-
         return super.onKeyEvent(event)
     }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = Service.START_STICKY_COMPATIBILITY
 
     inner class AccessibilityHandler(serviceWeakReference: MyAccessibilityService) : Handler() {
         internal var mServiceWeakReference: WeakReference<MyAccessibilityService>? = null
@@ -72,12 +86,12 @@ class MyAccessibilityService : AccessibilityService() {
         }
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            when(msg.what) {
-                HANDLER_HOME_DELAY_TIME_WHAT -> {
-                    mServiceWeakReference?.get()?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME)
-                    removeMessages(HANDLER_HOME_DELAY_TIME_WHAT)
-                }
+            val action = getLongPressAction(msg.what)
+            if (action != 0) {
+                mServiceWeakReference?.get()?.performGlobalAction(action)
             }
+            removeMessages(msg.what)
+
         }
     }
 
