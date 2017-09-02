@@ -8,6 +8,7 @@
     <string name="cat_software">软件</string>
 
     <string name="pref_enabled">启用</string>
+    <string name="pref_interval">灵敏度(数字越小越灵敏)</string>
     <string name="pref_home_press">Home 短按</string>
     <string name="pref_home_long_press">Home 长按</string>
     <string name="pref_back_press">Back 短按</string>

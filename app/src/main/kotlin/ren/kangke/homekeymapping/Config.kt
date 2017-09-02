@@ -10,6 +10,7 @@ import android.preference.PreferenceManager
 object Config {
 
     val KEY_ENABLED = "key_enabled"
+    val KEY_INTERVAL = "key_interval"
 
     val KEY_HOME_PRESS = "key_home_press"
     val KEY_HOME_LONG_PRESS = "key_home_long_press"
@@ -45,4 +46,7 @@ object Config {
 
     fun setKeyCode(ctx: Context, key: String, value: Int) = PreferenceManager.getDefaultSharedPreferences(ctx).edit().putInt(key, value).apply()
 
+    fun getInterval(ctx: Context): Int = PreferenceManager.getDefaultSharedPreferences(ctx).getInt(KEY_INTERVAL, 300)
+
+    fun setInterval(ctx: Context, value: Int) = PreferenceManager.getDefaultSharedPreferences(ctx).edit().putInt(KEY_INTERVAL, value).apply()
 }

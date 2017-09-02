@@ -16,6 +16,7 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
 
 
     private var prefEnabled: Preference? = null
+    private var prefInterval: Preference? = null
     private var prefHomePress: Preference? = null
     private var prefHomeLongPress: Preference? = null
     private var prefBackPress: Preference? = null
@@ -39,6 +40,7 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
 
     override fun initComponents() {
         prefEnabled = findPreference(Config.KEY_ENABLED)
+        prefInterval = findPreference(Config.KEY_INTERVAL)
         prefHomePress = findPreference(Config.KEY_HOME_PRESS)
         prefHomeLongPress = findPreference(Config.KEY_HOME_LONG_PRESS)
         prefBackPress = findPreference(Config.KEY_BACK_PRESS)
@@ -53,6 +55,16 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
     override fun initEvents() {
         prefEnabled?.setOnPreferenceClickListener {
             goAccess()
+            true
+        }
+
+        prefInterval?.setOnPreferenceClickListener {
+            AlertDialog.Builder(activity).setItems(resources.getStringArray(R.array.interval_array), {
+                _, which ->
+                val iv = (which + 1) * 100
+                Config.setInterval(activity, iv)
+                prefInterval?.summary = Config.getInterval(activity).toString()
+            }).show()
             true
         }
 
@@ -76,7 +88,7 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
 
     override fun initLogic() {
         updateAccessibilityServiceStatus()
-
+        prefInterval?.summary = Config.getInterval(activity).toString()
         prefHomePress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_HOME_PRESS))
         prefHomeLongPress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_HOME_LONG_PRESS))
         prefBackPress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_BACK_PRESS))
