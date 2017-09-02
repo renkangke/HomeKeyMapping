@@ -2,6 +2,7 @@ package ren.kangke.homekeymapping
 
 import android.accessibilityservice.AccessibilityService
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
@@ -14,7 +15,7 @@ import java.lang.ref.WeakReference
  * Created by renkangke .
  */
 
-class MyAccessibilityService : AccessibilityService() {
+class ButtonEventService : AccessibilityService() {
 
     companion object {
         /**
@@ -32,15 +33,41 @@ class MyAccessibilityService : AccessibilityService() {
             else -> 0
         }
 
-        fun getPressAction(keyCode: Int): Int = when(keyCode) {
-            KeyEvent.KEYCODE_HOME -> AccessibilityService.GLOBAL_ACTION_BACK
+        fun getPressAction(ctx: Context, keyCode: Int): Int = when(keyCode) {
+            KeyEvent.KEYCODE_HOME -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_HOME_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_HOME_PRESS)
+                code
+            }
+            KeyEvent.KEYCODE_BACK -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_BACK_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_BACK_PRESS)
+                code
+            }
+            KeyEvent.KEYCODE_APP_SWITCH -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_RECENT_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_RECENT_PRESS)
+                code
+            }
             else -> 0
         }
 
-        fun getLongPressAction(msgWhat: Int): Int = when(msgWhat) {
-            HANDLER_HOME_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_HOME
-            HANDLER_BACK_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN
-            HANDLER_RECENT_DELAY_TIME_WHAT -> AccessibilityService.GLOBAL_ACTION_RECENTS
+        fun getLongPressAction(ctx: Context, msgWhat: Int): Int = when(msgWhat) {
+            HANDLER_HOME_DELAY_TIME_WHAT -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_HOME_LONG_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_HOME_LONG_PRESS)
+                code
+            }
+            HANDLER_BACK_DELAY_TIME_WHAT -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_BACK_LONG_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_BACK_LONG_PRESS)
+                code
+            }
+            HANDLER_RECENT_DELAY_TIME_WHAT -> {
+                var code = Config.getKeyCode(ctx, Config.KEY_RECENT_LONG_PRESS)
+                if (code == -1) code = Config.getDefaultKeyCode(Config.KEY_RECENT_LONG_PRESS)
+                code
+            }
             else -> 0
         }
     }
@@ -48,7 +75,7 @@ class MyAccessibilityService : AccessibilityService() {
     private var mIsFirstAction = false
     private var mFirstEventTime = 0L
 
-    private val mAccessibilityHandler: Handler = AccessibilityHandler(this)
+    private val mAccessibilityHandler: Handler = AccessibilityHandler(this, this)
 
     override fun onInterrupt() { }
 
@@ -66,7 +93,7 @@ class MyAccessibilityService : AccessibilityService() {
                 val interval = System.currentTimeMillis() - mFirstEventTime
                 if (interval < (INTERVAL_TIME * 3)) {
                     mAccessibilityHandler.removeMessages(what)
-                    val action = getPressAction(key)
+                    val action = getPressAction(this, key)
                     if (action != 0) {
                         performGlobalAction(action)
                     }
@@ -79,16 +106,14 @@ class MyAccessibilityService : AccessibilityService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = Service.START_STICKY_COMPATIBILITY
 
-    inner class AccessibilityHandler(serviceWeakReference: MyAccessibilityService) : Handler() {
-        internal var mServiceWeakReference: WeakReference<MyAccessibilityService>? = null
-        init {
-            mServiceWeakReference = WeakReference(serviceWeakReference)
-        }
+    class AccessibilityHandler(ctx: Context, serviceWeakReference: ButtonEventService) : Handler() {
+        var mContext = ctx
+        var mServiceWeakReference: WeakReference<ButtonEventService> = WeakReference(serviceWeakReference)
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            val action = getLongPressAction(msg.what)
+            val action = getLongPressAction(mContext, msg.what)
             if (action != 0) {
-                mServiceWeakReference?.get()?.performGlobalAction(action)
+                mServiceWeakReference.get()?.performGlobalAction(action)
             }
             removeMessages(msg.what)
 

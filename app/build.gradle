@@ -5,13 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-    defaultConfig {
-        applicationId "ren.kangke.home.back"
-        minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -23,8 +17,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    compile "com.github.rarnu:rarnubase:1.1.2"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 repositories {
