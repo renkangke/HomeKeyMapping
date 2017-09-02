@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/cat_status">
+        <Preference android:key="key_enabled" android:title="@string/pref_enabled"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/cat_key_press">
+        <Preference android:key="key_home_press" android:title="@string/pref_home_press" android:summary="@string/pval_default"/>
+        <Preference android:key="key_home_long_press" android:title="@string/pref_home_long_press" android:summary="@string/pval_default"/>
+        <Preference android:key="key_back_press" android:title="@string/pref_back_press" android:summary="@string/pval_default"/>
+        <Preference android:key="key_back_long_press" android:title="@string/pref_back_long_press" android:summary="@string/pval_default"/>
+        <Preference android:key="key_recent_press" android:title="@string/pref_recent_press" android:summary="@string/pval_default"/>
+        <Preference android:key="key_recent_long_press" android:title="@string/pref_recent_long_press" android:summary="@string/pval_default"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/cat_software">
+        <Preference android:key="key_about" android:title="@string/pref_about"/>
+        <Preference android:key="key_opensource" android:title="@string/pref_opensource"/>
+    </PreferenceCategory>
+</PreferenceScreen>

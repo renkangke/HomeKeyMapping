@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="action_array">
+        <item>默认</item>
+        <item>无</item>
+        <item>Back</item>
+        <item>Home</item>
+        <item>Recent</item>
+        <item>Notification</item>
+        <item>Quick Settings</item>
+        <item>Power Dialog</item>
+        <item>Split Screen</item>
+    </string-array>
+</resources>

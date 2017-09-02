@@ -1,5 +1,24 @@
 <resources>
     <string name="app_name">mBack</string>
-    <string name="accessibility_service">home键轻触返回服务</string>
+    <string name="accessibility_service">mBack Assist</string>
     <string name="accessibility_label">帮助你打开home键轻触返回，长按home的服务</string>
+
+    <string name="cat_status">功能</string>
+    <string name="cat_key_press">按键</string>
+    <string name="cat_software">软件</string>
+
+    <string name="pref_enabled">启用</string>
+    <string name="pref_home_press">Home 短按</string>
+    <string name="pref_home_long_press">Home 长按</string>
+    <string name="pref_back_press">Back 短按</string>
+    <string name="pref_back_long_press">Back 长按</string>
+    <string name="pref_recent_press">Recent 短按</string>
+    <string name="pref_recent_long_press">Recent 长按</string>
+    <string name="pref_about">关于</string>
+    <string name="pref_opensource">开源信息</string>
+
+    <string name="pval_default">默认</string>
+    <string name="pval_none">无</string>
+    <string name="pval_enabled">已启动</string>
+    <string name="pval_disabled">未启动</string>
 </resources>

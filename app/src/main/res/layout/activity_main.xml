@@ -13,4 +13,9 @@
             android:text="需要打开辅助服务"/>
 
 
+    <Button
+            android:id="@+id/btnLock"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+    />
 </RelativeLayout>
