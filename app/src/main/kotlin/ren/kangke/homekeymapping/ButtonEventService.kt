@@ -60,10 +60,10 @@ class ButtonEventService : AccessibilityService() {
             mIsFirstAction = !mIsFirstAction
             if (mIsFirstAction) {
                 mFirstEventTime = System.currentTimeMillis()
-                mAccessibilityHandler.sendEmptyMessageDelayed(what, Config.getInterval(this).toLong())
+                mAccessibilityHandler.sendEmptyMessageDelayed(what, Config.getKeyCode(this, Config.KEY_INTERVAL).toLong())
             } else {
                 val interval = System.currentTimeMillis() - mFirstEventTime
-                if (interval < Config.getInterval(this)) {
+                if (interval < Config.getKeyCode(this, Config.KEY_INTERVAL)) {
                     mAccessibilityHandler.removeMessages(what)
                     val action = getPressAction(this, key)
                     if (action != 0) {
