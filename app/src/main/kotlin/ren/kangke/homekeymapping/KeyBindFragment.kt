@@ -2,6 +2,7 @@ package ren.kangke.homekeymapping
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
 import android.provider.Settings
@@ -76,11 +77,13 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
         prefRecentLongPress?.onPreferenceClickListener = this
 
         prefAbout?.setOnPreferenceClickListener {
-            // TODO: about
+            startActivity(Intent(activity, AboutActivity::class.java))
             true
         }
         prefOpenSource?.setOnPreferenceClickListener {
-            // TODO: opensource
+            val inOpenSource = Intent(Intent.ACTION_VIEW)
+            inOpenSource.data = Uri.parse("https://github.com/renkangke/HomeKeyMapping")
+            startActivity(inOpenSource)
             true
         }
 
