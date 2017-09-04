@@ -62,8 +62,8 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
             AlertDialog.Builder(activity).setItems(resources.getStringArray(R.array.interval_array), {
                 _, which ->
                 val iv = (which + 1) * 100
-                Config.setInterval(activity, iv)
-                prefInterval?.summary = Config.getInterval(activity).toString()
+                Config.setKeyCode(activity, Config.KEY_INTERVAL, iv)
+                prefInterval?.summary = Config.getKeyCode(activity, Config.KEY_INTERVAL).toString()
             }).show()
             true
         }
@@ -88,7 +88,7 @@ class KeyBindFragment: BasePreferenceFragment(), Preference.OnPreferenceClickLis
 
     override fun initLogic() {
         updateAccessibilityServiceStatus()
-        prefInterval?.summary = Config.getInterval(activity).toString()
+        prefInterval?.summary = Config.getKeyCode(activity, Config.KEY_INTERVAL).toString()
         prefHomePress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_HOME_PRESS))
         prefHomeLongPress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_HOME_LONG_PRESS))
         prefBackPress?.summary = Config.getKeyCodeName(Config.getKeyCode(activity, Config.KEY_BACK_PRESS))
