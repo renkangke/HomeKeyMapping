@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import java.lang.ref.WeakReference
@@ -54,6 +55,7 @@ class ButtonEventService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
+        // Log.e("AccessibilityKeyEvent", "keycode => ${event.keyCode}")
         val key = event.keyCode
         val what = getDelayTimeWhat(key)
         if (what != 0) {

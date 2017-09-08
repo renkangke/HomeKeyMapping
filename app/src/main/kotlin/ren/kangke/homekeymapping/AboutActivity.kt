@@ -42,7 +42,12 @@ class AboutActivity: BaseActivity() {
         }
 
         override fun initLogic() {
+            try {
+                val appInfo = activity.packageManager.getPackageInfo(activity.packageName, 0)
+                innerView.tvAppVersion.text = "${appInfo.versionName}(${appInfo.versionCode})"
+            } catch (e: Exception) {
 
+            }
         }
 
         override fun initMenu(menu: Menu) {
@@ -52,7 +57,6 @@ class AboutActivity: BaseActivity() {
         override fun onGetNewArguments(bn: Bundle?) {
 
         }
-
     }
 
 }

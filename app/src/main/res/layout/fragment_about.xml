@@ -3,6 +3,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="64dip" android:layout_height="64dip"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/icon"
+            android:layout_marginTop="16dip"/>
+
+    <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/app_name"
+            android:layout_below="@+id/ivIcon"
+            android:layout_marginTop="16dip"
+            android:textColor="@color/black"/>
+    <TextView
+            android:id="@+id/tvAppVersion"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tvAppName"
+            android:layout_marginTop="16dip"
+            android:textColor="@color/black"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_below="@+id/tvAppVersion"
+              android:text="@string/accessibility_label"
+              android:layout_margin="16dip"/>
+
+    <TextView
+            android:id="@+id/tvDonateMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnDonateAlipay"
+            android:text="@string/donate_msg"
+            android:layout_margin="16dip"/>
+
     <Button
             android:id="@+id/btnDonateAlipay"
             android:layout_width="match_parent"
@@ -12,6 +48,5 @@
             android:layout_margin="8dip"
             android:textColor="@color/blue"
             android:background="@null"/>
-
 
 </RelativeLayout>
