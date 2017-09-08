@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">mBack</string>
+    <string name="app_name">KeyAssist</string>
     <string name="app_about">关于</string>
-    <string name="accessibility_service">mBack Assist</string>
-    <string name="accessibility_label">帮助你打开home键轻触返回，长按home的服务</string>
+    <string name="accessibility_label">帮助您完成物理按键映射的修改。\n\n目前支持原生 ROM，如 Lineage 以及 Lineage 的衍生版本。支持一加手机的氢OS各个版本，需要锁定本软件不被清理，或者手动修改『多任务清除方式』。</string>
 
     <string name="cat_status">功能</string>
     <string name="cat_key_press">按键</string>
@@ -28,4 +27,6 @@
     <string name="donate_no_wechat">没有安装微信客户端</string>
     <string name="donate_alipay">捐赠(支付宝)</string>
     <string name="donate_wechat">捐赠(微信)</string>
+
+    <string name="donate_msg">如果您支持我的工作，请给予一个捐赠，以便我能在后续为软件加入更多功能，感谢您的支持</string>
 </resources>
