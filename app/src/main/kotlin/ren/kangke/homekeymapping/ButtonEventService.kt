@@ -27,14 +27,14 @@ class ButtonEventService : AccessibilityService() {
         fun getDelayTimeWhat(keyCode: Int): Int = when (keyCode) {
             KeyEvent.KEYCODE_HOME -> HANDLER_HOME_DELAY_TIME_WHAT
             KeyEvent.KEYCODE_BACK -> HANDLER_BACK_DELAY_TIME_WHAT
-            KeyEvent.KEYCODE_APP_SWITCH -> HANDLER_RECENT_DELAY_TIME_WHAT
+            KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_APP_SWITCH -> HANDLER_RECENT_DELAY_TIME_WHAT
             else -> 0
         }
 
         fun getPressAction(ctx: Context, keyCode: Int): Int = when (keyCode) {
             KeyEvent.KEYCODE_HOME -> Config.getKeyCode(ctx, Config.KEY_HOME_PRESS)
             KeyEvent.KEYCODE_BACK -> Config.getKeyCode(ctx, Config.KEY_BACK_PRESS)
-            KeyEvent.KEYCODE_APP_SWITCH -> Config.getKeyCode(ctx, Config.KEY_RECENT_PRESS)
+            KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_APP_SWITCH -> Config.getKeyCode(ctx, Config.KEY_RECENT_PRESS)
             else -> 0
         }
 
@@ -74,7 +74,7 @@ class ButtonEventService : AccessibilityService() {
                 }
             }
         }
-        return if (key in arrayOf(KeyEvent.KEYCODE_HOME, KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_APP_SWITCH)) true else super.onKeyEvent(event)
+        return if (key in arrayOf(KeyEvent.KEYCODE_HOME, KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_APP_SWITCH, KeyEvent.KEYCODE_MENU)) true else super.onKeyEvent(event)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = Service.START_STICKY_COMPATIBILITY
