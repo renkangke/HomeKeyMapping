@@ -9,18 +9,18 @@ import android.preference.PreferenceManager
  */
 object Config {
 
-    val KEY_ENABLED = "key_enabled"
-    val KEY_INTERVAL = "key_interval"
+    const val KEY_ENABLED = "key_enabled"
+    const val KEY_INTERVAL = "key_interval"
 
-    val KEY_HOME_PRESS = "key_home_press"
-    val KEY_HOME_LONG_PRESS = "key_home_long_press"
-    val KEY_BACK_PRESS = "key_back_press"
-    val KEY_BACK_LONG_PRESS = "key_back_long_press"
-    val KEY_RECENT_PRESS = "key_recent_press"
-    val KEY_RECENT_LONG_PRESS = "key_recent_long_press"
+    const val KEY_HOME_PRESS = "key_home_press"
+    const val KEY_HOME_LONG_PRESS = "key_home_long_press"
+    const val KEY_BACK_PRESS = "key_back_press"
+    const val KEY_BACK_LONG_PRESS = "key_back_long_press"
+    const val KEY_RECENT_PRESS = "key_recent_press"
+    const val KEY_RECENT_LONG_PRESS = "key_recent_long_press"
 
-    val KEY_ABOUT = "key_about"
-    val KEY_OPENSOURCE = "key_opensource"
+    const val KEY_ABOUT = "key_about"
+    const val KEY_OPENSOURCE = "key_opensource"
 
     private var needReload = true
     private var currentHomePress = 0
@@ -88,7 +88,6 @@ object Config {
         needReload = false
         getCurrent(key)
     }
-
 
     fun setKeyCode(ctx: Context, key: String, value: Int) {
         PreferenceManager.getDefaultSharedPreferences(ctx).edit().putInt(key, value).apply()

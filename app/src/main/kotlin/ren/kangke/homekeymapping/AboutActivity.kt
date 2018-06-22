@@ -1,62 +1,40 @@
 package ren.kangke.homekeymapping
 
-import android.app.Fragment
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
-import android.view.Menu
-import com.rarnu.base.app.BaseActivity
-import com.rarnu.base.app.BaseFragment
+import android.view.MenuItem
+import com.rarnu.kt.android.resStr
+import com.rarnu.kt.android.showActionBack
 import kotlinx.android.synthetic.main.fragment_about.*
-import kotlinx.android.synthetic.main.fragment_about.view.*
 
 /**
  * Created by rarnu on 9/4/17.
  */
-class AboutActivity: BaseActivity() {
-    override fun customTheme(): Int = 0
+class AboutActivity : Activity() {
 
-    override fun getActionBarCanBack(): Boolean = true
+    @SuppressLint("SetTextI18n")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_about)
+        actionBar.title = resStr(R.string.app_about)
+        showActionBack()
 
-    override fun getIcon(): Int = R.drawable.icon
+        btnDonateAlipay.setOnClickListener { DonateUtil.donateAlipay(this) }
 
-    override fun replaceFragment(): Fragment = AboutFragment()
-
-    class AboutFragment: BaseFragment() {
-        override fun getBarTitle(): Int = R.string.app_about
-
-        override fun getBarTitleWithPath(): Int = 0
-
-        override fun getCustomTitle(): String? = null
-
-        override fun getFragmentLayoutResId(): Int = R.layout.fragment_about
-
-        override fun getFragmentState(): Bundle? = null
-
-        override fun getMainActivityName(): String? = null
-
-        override fun initComponents() {
+        try {
+            val appInfo = packageManager.getPackageInfo(packageName, 0)
+            tvAppVersion.text = "${appInfo.versionName}(${appInfo.versionCode})"
+        } catch (e: Exception) {
 
         }
+    }
 
-        override fun initEvents() {
-            innerView.btnDonateAlipay.setOnClickListener { DonateUtil.donateAlipay(activity) }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
         }
-
-        override fun initLogic() {
-            try {
-                val appInfo = activity.packageManager.getPackageInfo(activity.packageName, 0)
-                innerView.tvAppVersion.text = "${appInfo.versionName}(${appInfo.versionCode})"
-            } catch (e: Exception) {
-
-            }
-        }
-
-        override fun initMenu(menu: Menu) {
-
-        }
-
-        override fun onGetNewArguments(bn: Bundle?) {
-
-        }
+        return true
     }
 
 }
