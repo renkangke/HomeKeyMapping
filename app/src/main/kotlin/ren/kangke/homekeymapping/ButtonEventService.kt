@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import java.lang.ref.WeakReference
@@ -20,9 +19,9 @@ class ButtonEventService : AccessibilityService() {
 
     companion object {
 
-        private val HANDLER_HOME_DELAY_TIME_WHAT = 100001
-        private val HANDLER_RECENT_DELAY_TIME_WHAT = 100002
-        private val HANDLER_BACK_DELAY_TIME_WHAT = 100003
+        private const val HANDLER_HOME_DELAY_TIME_WHAT = 100001
+        private const val HANDLER_RECENT_DELAY_TIME_WHAT = 100002
+        private const val HANDLER_BACK_DELAY_TIME_WHAT = 100003
 
         fun getDelayTimeWhat(keyCode: Int): Int = when (keyCode) {
             KeyEvent.KEYCODE_HOME -> HANDLER_HOME_DELAY_TIME_WHAT
@@ -80,8 +79,8 @@ class ButtonEventService : AccessibilityService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = Service.START_STICKY_COMPATIBILITY
 
     class AccessibilityHandler(ctx: Context, serviceWeakReference: ButtonEventService) : Handler() {
-        var mContext = ctx
-        var mServiceWeakReference: WeakReference<ButtonEventService> = WeakReference(serviceWeakReference)
+        private var mContext = ctx
+        private var mServiceWeakReference: WeakReference<ButtonEventService> = WeakReference(serviceWeakReference)
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             val action = getLongPressAction(mContext, msg.what)
