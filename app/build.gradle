@@ -3,8 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 28
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -16,11 +15,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    // compile "com.github.rarnu:rarnubase:1.1.2"
-    compile "com.github.rarnu:ktfunctional:0.2.2"
-    compile 'com.github.didikee:AndroidDonate:0.1.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    // implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.github.rarnu:ktfunctional:0.8.0"
+    implementation 'com.github.didikee:AndroidDonate:0.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
     mavenCentral()

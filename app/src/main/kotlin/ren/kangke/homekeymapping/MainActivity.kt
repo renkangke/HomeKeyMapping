@@ -17,7 +17,6 @@ import com.rarnu.kt.android.resStr
 
 class MainActivity : PreferenceActivity(), Preference.OnPreferenceClickListener {
 
-
     private lateinit var prefEnabled: Preference
     private lateinit var prefInterval: Preference
     private lateinit var prefHomePress: Preference
@@ -31,7 +30,7 @@ class MainActivity : PreferenceActivity(), Preference.OnPreferenceClickListener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        actionBar.title = resStr(R.string.app_name)
+        actionBar?.title = resStr(R.string.app_name)
 
         val service = Intent(this, ButtonEventService::class.java)
         startService(service)
